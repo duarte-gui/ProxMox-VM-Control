@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controle de Máquinas Virtuais</title>
+    <style>
+        .btn-ligado, .btn-desligado {
+            width: 50%; /* Defina a largura desejada, pode ser em porcentagem ou pixels */
+            height: 100px; /* Defina a altura desejada */
+            font-size: 24px; /* Tamanho da fonte */
+            margin: 10px; /* Margem entre os botões */
+        }
+
+        .btn-ligado {
+            background-color: green;
+            color: white;
+        }
+
+        .btn-desligado {
+            background-color: red;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Controle de Máquinas Virtuais</h1>
+
+    <div>
+        <h2>Máquina Virtual de Jogos</h2>
+        <form action="/iniciar_jogos" method="post">
+            <button type="submit" class="{{ 'btn-ligado' if status_jogos == 'running' else 'btn-desligado' }}">Iniciar Jogos</button>
+        </form>
+        <p>Status: {{ status_jogos }}</p>
+    </div>
+
+    <div>
+        <h2>Máquina Virtual de Trabalho</h2>
+        <form action="/iniciar_trabalho" method="post">
+            <button type="submit" class="{{ 'btn-ligado' if status_trabalho == 'running' else 'btn-desligado' }}">Iniciar Trabalho</button>
+        </form>
+        <p>Status: {{ status_trabalho }}</p>
+    </div>
+
+</body>
+</html>
