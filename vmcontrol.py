@@ -2,6 +2,7 @@
 from flask import Flask, render_template, jsonify, request
 import requests
 import time
+from gevent.pywsgi import WSGIServer
 
 app = Flask(__name__)
     
@@ -74,13 +75,6 @@ def iniciar_jogos():
 def iniciar_trabalho():
     return start_vm(vm_id_trabalho)
 
-if __name__ == '__main__':
-    app.run(debug=True)
-    from waitress import serve
-    serve(app, host="0.0.0.0", port=3380) # Host e porta de escuta (altere se necessário)
-
-from flask import request, jsonify
-
 @app.route('/alexa', methods=['POST'])
 def alexa_endpoint():
     # Verifique se a solicitação inclui o cabeçalho 'User-Agent' da Alexa
@@ -147,3 +141,10 @@ def alexa_endpoint():
             'shouldEndSession': True
         }
     })
+
+
+if __name__ == '__main__':
+    http_server = WSGIServer(('', 443), app)
+    http_server.serve_forever()
+    app.run(ssl_context=('fullchain.pem', 'privkey.pem'))
+
